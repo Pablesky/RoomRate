@@ -48,7 +48,7 @@ def cleanDataFolder():
 def load_image(path, window):
     try:
         image = Image.open(path)
-        image.thumbnail((min(image.width, 300), min(image.height, 300)))
+        image.thumbnail((min(image.width, 500), min(image.height, 300)))
         photo_img = ImageTk.PhotoImage(image)
         window["image"].update(data=photo_img)
     except:
