@@ -12,6 +12,37 @@ from textwrap import indent
 import requests
 import time
 
+Features = {'beamed_ceiling':0.7,
+            'carpet':0.9,
+            'ceiling fan': 0.6,
+            'coffered_ceiling':0.6,
+            'exposed_bricks':0.4,
+            'fireplace':0.5,
+            'french_doors':0.3,
+            'hardwood_floor':0.3,
+            'high_ceiling':0.1,
+            'kitchen_bar':0.2,
+            'kitchen_island':0.1,
+            'natural_light,':0.5,
+            'notable_chandelier':0.8,
+            'skylight':0.2,
+            'tainless_steel': 0.1,
+            'tile_floor': 0.5, 
+            'vaulted_ceiling':0.5,
+            'central_ac':0.1, 
+            'deck':0.1, 
+            'dock':0.4, 
+            'fire_pit':0.4, 
+            'hot_tub':0.3, 
+            'lawn':0.6, 
+            'mountain_view':0.7, 
+            'outdoor_kitchen':0.6, 
+            'outdoor_living_space':0.3, 
+            'pergola':0.3, 
+            'pool':0.1, 
+            'water_view':0.2
+            }
+
 
 def getHTML(url):
     r = requests.get(url)
