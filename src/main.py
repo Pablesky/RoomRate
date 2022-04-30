@@ -39,7 +39,8 @@ def main():
     url = easygui.enterbox("What's your url of FOTOCASA you want to rate?")
     code = getHTML(url)
     imageLinks = getListLinksPhotos(code)
-    downloadImages(imageLinks)
+    print(imageLinks)
+    #downloadImages(imageLinks)
     #cleanDataFolder()
     
 

@@ -1,21 +1,22 @@
-from asyncio.base_subprocess import BaseSubprocessTransport
+# Make sure you have installed the required packages:
+#   pip install requests
+
+from textwrap import indent
 import requests
-import re as regex
-from bs4 import BeautifulSoup
+import json
 
-url = 'https://www.fotocasa.es/es/comprar/vivienda/palma-de-mallorca/aire-acondicionado-calefaccion-terraza-ascensor/163304622/d'
+url = 'https://api-us.restb.ai/vision/v2/multipredict'
+payload = {
+    # Add your client key
+    'client_key': 'b717829c286243060e2429cc405e60bc480b18b2a4fe84b462e47cdf2ff41283',
+    'model_id': 're_roomtype_global_v2,re_features_v3,re_appliances_v2',
+    # Add the image URL you want to classify
+    'image_url': 'https://static.inmofactory.com/images/inmofactory/documents/1/88767/19843271/299050732.jpg?rule=web_948x542'
+}
 
-r = requests.get(url)
-soup = BeautifulSoup(r.content,'html.parser')
-with open('test.txt','w') as f:
-    f.write(soup.prettify())
+# Make the classify request
+response = requests.get(url, params=payload)
 
-
-list = soup.find_all("img", class_="re-DetailMosaicPhoto")
-lista = []
-for i in list :
-    paraula = regex.search(r'src=\"(.*?)\"', str(i)).group(1)
-    lista.append(paraula)
-
-print(lista)
-
+# The response is formatted in JSON
+json_response = response.json()
+print(json_response['response']['solutions']['re_features_v3']['detections'])
