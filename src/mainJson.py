@@ -15,6 +15,8 @@ import numpy as np
 from selenium import webdriver
 import time
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 
 Features = {'beamed_ceiling':0.7,
             'carpet':0.9,
@@ -46,7 +48,7 @@ Features = {'beamed_ceiling':0.7,
             'pool':0.1, 
             'water_view':0.2
             }
-
+""""
 def JQuery(url):    
     # Create the webdriver object. Here the 
     # chromedriver is present in the driver 
@@ -54,6 +56,28 @@ def JQuery(url):
     driver = webdriver.Chrome(r"./chromedriver")
     
     # get https://www.geeksforgeeks.org/
+    driver.get(url)
+    
+    button = driver.find_element_by_xpath("/html/body/div[1]/div[4]/div/div/div/footer/div/button[2]")
+    button.click()
+
+    time.sleep(5)
+    
+    # Obtain button by link text and click.
+    button = driver.find_element_by_xpath("/html/body/div[1]/div[2]/main/ul[1]/li/button")
+    button.click()
+
+    time.sleep(10)
+    codigo =  BeautifulSoup(driver.page_source, 'html.parser')
+
+    with open('test.html', 'w') as f:
+        f.write(codigo.prettify())
+    
+    return codigo
+"""
+def JQuery(url):
+    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+    
     driver.get(url)
     
     button = driver.find_element_by_xpath("/html/body/div[1]/div[4]/div/div/div/footer/div/button[2]")
@@ -104,7 +128,7 @@ def downloadImages(imageLinks):
             file.write(response.content)
 
 def cleanDataFolder(): 
-    dir = './data/'
+    dir = './data/images/'
     for f in os.listdir(dir):
         os.remove(os.path.join(dir, f))
 
