@@ -116,13 +116,13 @@ def main():
         if event == 'Next':
             indiceFoto = indiceFoto + 1
             if indiceFoto == len(ubicacionFotos):
-                indiceFoto = len(ubicacionFotos) - 1
+                indiceFoto = 0
             update(ubicacionFotos, indiceFoto, window,imageLinks, jsonValues)  
 
         if event == 'Prev':
             indiceFoto = indiceFoto - 1
             if indiceFoto < 0:
-                indiceFoto = 0
+                indiceFoto = len(ubicacionFotos) - 1
             update(ubicacionFotos, indiceFoto, window,imageLinks,jsonValues)
         
         if event == sg.WIN_CLOSED:
