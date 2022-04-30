@@ -54,6 +54,7 @@ def update(contenido, i, window):
 def main():
     indiceFoto = 0
     ubicacionFotos = []
+    imageLinks = []
     elements = [
         [sg.Input(size=(25,1), enable_events=True, key='url'), sg.Button("Search!")],
         [sg.Image(key='image')],
