@@ -46,7 +46,8 @@ Features = {'beamed_ceiling':0.7,
             'outdoor_living_space':0.3, 
             'pergola':0.3, 
             'pool':0.1, 
-            'water_view':0.2
+            'water_view':0.2,
+            'natural_light':0.9
             }
 """"
 def JQuery(url):    
@@ -84,8 +85,7 @@ def JQuery(url):
     button.click()
 
     time.sleep(5)
-    
-    # Obtain button by link text and click.
+
     button = driver.find_element_by_xpath("/html/body/div[1]/div[2]/main/ul[1]/li/button")
     button.click()
 
@@ -121,7 +121,6 @@ def getPrice(HTMLcode):
 
 def downloadImages(imageLinks):
     for i, imagen in enumerate(imageLinks):
-        # open image link and save as file
         response = requests.get(imagen)
         imagename = './data/images/FOTO_' + str(i + 1) + '.jpg'
         with open(imagename, 'wb') as file:
@@ -153,18 +152,14 @@ def update(contenido, i, window,imageLinks, jsonValues):
 def getPrediction(ubicacionFoto):
     url = 'https://api-eu.restb.ai/vision/v2/multipredict'
     payload = {
-        # Add your client key
         'client_key': 'b717829c286243060e2429cc405e60bc480b18b2a4fe84b462e47cdf2ff41283',
         'model_id': 're_roomtype_global_v2,re_features_v3,re_appliances_v2,re_condition',
-        # Add the image URL you want to classify
         'image_url': ubicacionFoto
     }
 
-    # Make the classify request
     time.sleep(1)
     response = requests.get(url, params=payload)
 
-    # The response is formatted in JSON
     return response.json() 
     
 
