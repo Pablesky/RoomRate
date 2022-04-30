@@ -56,8 +56,8 @@ def load_image(path, window):
 
 def update(contenido, i, window,imageLinks, jsonValues):
     load_image('./data/images/' + contenido[i], window)
-    window['Rate'].update(value=jsonValues[i]['response']['solutions']['re_condition']['score'])
     window['Prediction'].update(value=jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+    window['Rate'].update(value=jsonValues[i]['response']['solutions']['re_condition']['score'])
 
 def getPrediction(ubicacionFoto):
     url = 'https://api-eu.restb.ai/vision/v2/multipredict'
@@ -96,6 +96,7 @@ def main():
         [sg.Input(size=(25,1), enable_events=True, key='url'), sg.Button("Search!")],
         [sg.Image(key='image')],
         [sg.Button('Prev'), sg.Button('Next')],
+        [sg.Text("", size=(0,1), key='Cost')],
         [sg.Text("", size=(0,1), key='Prediction')],
         [sg.Text("", size=(0,1), key='Rate')]
     ]
@@ -110,17 +111,20 @@ def main():
             code = getHTML(url)
             imageLinks = getListLinksPhotos(code)
             downloadImages(imageLinks)
+            
             price = getPrice(code)
             price = price.replace('.', '')
-            price = float(price)
+            price = int(price)
+            
 
             ubicacionFotos = os.listdir('./data/images/')   
             ubicacionFotos.sort()
             jsonValues = createJSON(imageLinks)
 
             load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
-            window['Rate'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_condition']['score'])
+            window["Cost"].update(value=str(price) + '€')
             window['Prediction'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+            window['Rate'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_condition']['score'])
             
 
         
