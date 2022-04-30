@@ -1,18 +1,12 @@
-from multiprocessing.sharedctypes import Value
-from tokenize import group
 from turtle import update
 import PySimpleGUI as sg
 from PIL import Image, ImageTk
-from asyncio.base_subprocess import BaseSubprocessTransport
 import requests
 import re as regex
 from bs4 import BeautifulSoup
 import os
-from textwrap import indent
 import requests
 import time
-import numpy as np
-from selenium import webdriver
 import time
 from bs4 import BeautifulSoup
 from selenium import webdriver

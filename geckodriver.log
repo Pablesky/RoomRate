@@ -498,3 +498,26 @@ DevTools listening on ws://localhost:44173/devtools/browser/a37fa5c8-10e9-4930-8
 1651350697835	Marionette	INFO	Listening on port 41003
 Read port: 41003
 1651350697890	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1651350862758	geckodriver	INFO	Listening on 127.0.0.1:46427
+1651350863266	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "33947" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileL4uaBA"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1651350864497	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileL4uaBA/search.json.mozlz4", (void 0)))
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+DevTools listening on ws://localhost:33947/devtools/browser/843eac7f-3631-459a-9190-eec1df782ab7
+1651350866591	Marionette	INFO	Listening on port 42949
+Read port: 42949
+1651350866697	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1651350917470	Marionette	INFO	Stopped listening on port 42949
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
+
+1651350919652	Marionette	INFO	Stopped listening on port 41003
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
+
