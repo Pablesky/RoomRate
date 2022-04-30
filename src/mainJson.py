@@ -48,7 +48,7 @@ def cleanDataFolder():
 def load_image(path, window):
     try:
         image = Image.open(path)
-        image.thumbnail((min(image.width, 500), min(image.height, 500)))
+        image.thumbnail((min(image.width, 300), min(image.height, 300)))
         photo_img = ImageTk.PhotoImage(image)
         window["image"].update(data=photo_img)
     except:
@@ -57,7 +57,11 @@ def load_image(path, window):
 def update(contenido, i, window,imageLinks, jsonValues):
     load_image('./data/images/' + contenido[i], window)
     window['Prediction'].update(value=jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
-    window['Rate'].update(value=jsonValues[i]['response']['solutions']['re_condition']['score'])
+    mirar = jsonValues[i]['response']['solutions']['re_condition']['score']
+    if mirar is not None:
+        window['Rate'].update(value=mirar)
+    else:
+        window['Rate'].update(value="")
 
 def getPrediction(ubicacionFoto):
     url = 'https://api-eu.restb.ai/vision/v2/multipredict'
@@ -91,7 +95,7 @@ def main():
     ubicacionFotos = []
     imageLinks = []
     jsonValues = []
-    price = 0.0
+    price = 0
     elements = [
         [sg.Input(size=(25,1), enable_events=True, key='url'), sg.Button("Search!")],
         [sg.Image(key='image')],
@@ -124,21 +128,27 @@ def main():
             load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
             window["Cost"].update(value=str(price) + '€')
             window['Prediction'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
-            window['Rate'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_condition']['score'])
+            mirar = jsonValues[indiceFoto]['response']['solutions']['re_condition']['score']
+            if mirar is not None:
+                window['Rate'].update(value=mirar)
+            else:
+                window['Rate'].update(value="")
             
 
         
         if event == 'Next':
-            indiceFoto = indiceFoto + 1
-            if indiceFoto == len(ubicacionFotos):
-                indiceFoto = 0
-            update(ubicacionFotos, indiceFoto, window,imageLinks, jsonValues)  
+            if len(ubicacionFotos) > 1:
+                indiceFoto = indiceFoto + 1
+                if indiceFoto == len(ubicacionFotos):
+                    indiceFoto = 0
+                update(ubicacionFotos, indiceFoto, window,imageLinks, jsonValues)  
 
         if event == 'Prev':
-            indiceFoto = indiceFoto - 1
-            if indiceFoto < 0:
-                indiceFoto = len(ubicacionFotos) - 1
-            update(ubicacionFotos, indiceFoto, window,imageLinks,jsonValues)
+            if len(ubicacionFotos) > 1:
+                indiceFoto = indiceFoto - 1
+                if indiceFoto < 0:
+                    indiceFoto = len(ubicacionFotos) - 1
+                update(ubicacionFotos, indiceFoto, window,imageLinks,jsonValues)
         
         if event == sg.WIN_CLOSED:
             break    
