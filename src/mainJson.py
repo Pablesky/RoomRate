@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import os
 from textwrap import indent
 import requests
+import time
 
 def getHTML(url):
     r = requests.get(url)
@@ -62,6 +63,7 @@ def getRate(ubicacionFoto):
     }
 
     # Make the classify request
+    time.sleep(1)
     response = requests.get(url, params=payload)
 
     # The response is formatted in JSON
