@@ -218,8 +218,8 @@ def faceAge():
     age_config = "models/age_net.caffemodel"
     age_Net = cv2.dnn.readNet(age_config, age_weights)
     
-    ageList = ['(0-2)', '(4-6)', '(8-12)', '(15-20)',
-            '(25-32)', '(38-43)', '(48-53)', '(60-100)']
+    ageList = ['1', '5', '10', '17',
+            '29', '41', '50', '80']
     model_mean = (78.4263377603, 87.7689143744, 114.895847746)
     
     fH = img.shape[0]
@@ -280,7 +280,7 @@ def main():
         [sg.Text("", size=(0,1), key='Prediction')],
         [sg.Text("", size=(0,1), key='Features')],
         [sg.Text("", size=(0,1), key='Rate')],
-        [sg.Button('Face Compatibility')]
+        [sg.Button('Face Compatibility'), sg.Text("", size=(0,1), key='Recomendation')]
     ]
 
     window = sg.Window("RoomRate", elements, size=(500,500))
@@ -303,12 +303,12 @@ def main():
             ubicacionFotos.sort()
             jsonValues, puntuacion, cosas = createJSON(imageLinks)
 
-            media = calculateThings(puntuacion, cosas)
+            media = calculateThings(puntuacion, cosas) * 100
 
             load_image('./data/' + 'FOTO_' + str(indiceFoto + 1) + '.jpg', window)
             window["Cost"].update(value='Price: ' + str(price) + '€')
             window['Prediction'].update(value='Type: ' + str(jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))
-            window['Features'].update(value=str(media))
+            window['Features'].update(value='Object points: ' + str(media))
             
             mirar = jsonValues[indiceFoto]['response']['solutions']['re_condition']['score']
 
@@ -338,7 +338,9 @@ def main():
 
         if event == 'Face Compatibility':
             age = faceAge()
-            print(age)
+            if media != 0.0:
+                window['Recomendation'].update(value=100.0 - abs(int(age) - media))
+
 
 if __name__ == "__main__":
     main()
