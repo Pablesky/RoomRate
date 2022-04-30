@@ -11,6 +11,10 @@ import os
 from textwrap import indent
 import requests
 import time
+import numpy as np
+from selenium import webdriver
+import time
+from bs4 import BeautifulSoup
 
 Features = {'beamed_ceiling':0.7,
             'carpet':0.9,
@@ -43,6 +47,32 @@ Features = {'beamed_ceiling':0.7,
             'water_view':0.2
             }
 
+def JQuery(url):    
+    # Create the webdriver object. Here the 
+    # chromedriver is present in the driver 
+    # folder of the root directory.
+    driver = webdriver.Chrome(r"./chromedriver")
+    
+    # get https://www.geeksforgeeks.org/
+    driver.get(url)
+    
+    button = driver.find_element_by_xpath("/html/body/div[1]/div[4]/div/div/div/footer/div/button[2]")
+    button.click()
+
+    time.sleep(5)
+    
+    # Obtain button by link text and click.
+    button = driver.find_element_by_xpath("/html/body/div[1]/div[2]/main/ul[1]/li/button")
+    button.click()
+
+    time.sleep(10)
+    codigo =  BeautifulSoup(driver.page_source, 'html.parser')
+
+    with open('test.html', 'w') as f:
+        f.write(codigo.prettify())
+    
+    return codigo
+
 
 def getHTML(url):
     r = requests.get(url)
@@ -51,11 +81,13 @@ def getHTML(url):
 
 def getListLinksPhotos(HTMLcode):
     HTMLcode.prettify()
-    linesWithImages = HTMLcode.find_all("img", class_="re-DetailMosaicPhoto")
+    linesWithImages = HTMLcode.select(".re-DetailMultimediaImage-container > img")
+
     imagesLinks = []
     for linia in linesWithImages :
         link = regex.search(r'src=\"(.*?)\"', str(linia)).group(1)
         imagesLinks.append(link)
+
     return imagesLinks
 
 def getPrice(HTMLcode):
@@ -63,12 +95,11 @@ def getPrice(HTMLcode):
     linesWithImages = HTMLcode.find_all("span", class_="re-DetailHeader-price")
     return regex.search(r'>(.*?) €<',str(linesWithImages[0])).group(1)
 
-
 def downloadImages(imageLinks):
     for i, imagen in enumerate(imageLinks):
         # open image link and save as file
         response = requests.get(imagen)
-        imagename = './data/images/FOTO_' + str(i+1) + '.jpg'
+        imagename = './data/images/FOTO_' + str(i + 1) + '.jpg'
         with open(imagename, 'wb') as file:
             file.write(response.content)
 
@@ -87,7 +118,7 @@ def load_image(path, window):
         print(f"Unable to open {path}!")
 
 def update(contenido, i, window,imageLinks, jsonValues):
-    load_image('./data/images/' + contenido[i], window)
+    load_image('./data/images/' + 'FOTO_' + str(i + 1) + '.jpg', window)
     window['Prediction'].update(value='Type: ' + str(jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))    
     mirar = jsonValues[i]['response']['solutions']['re_condition']['score']
     if mirar is not None:
@@ -121,7 +152,6 @@ def createJSON(imageLinks):
     return JSONvalues
         
 
-
 def main():
     indiceFoto = 0
     ubicacionFotos = []
@@ -144,9 +174,10 @@ def main():
         event, values = window.read()
         if event == 'Search!':
             indiceFoto = 0
-            url = values['url']
-            code = getHTML(url)
+
+            code = JQuery(values['url'])
             imageLinks = getListLinksPhotos(code)
+
             downloadImages(imageLinks)
             
             price = getPrice(code)
@@ -158,7 +189,7 @@ def main():
             ubicacionFotos.sort()
             jsonValues = createJSON(imageLinks)
 
-            load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
+            load_image('./data/images/' + 'FOTO_' + str(indiceFoto + 1) + '.jpg', window)
             window["Cost"].update(value='Price: ' + str(price) + '€')
             window['Prediction'].update(value='Type: ' + str(jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))
             window['Features'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_features_v3']['detections'])
@@ -186,6 +217,7 @@ def main():
                 update(ubicacionFotos, indiceFoto, window,imageLinks,jsonValues)
         
         if event == sg.WIN_CLOSED:
+            cleanDataFolder()
             break    
 
 if __name__ == "__main__":
