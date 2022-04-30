@@ -57,6 +57,7 @@ def load_image(path, window):
 def update(contenido, i, window,imageLinks, jsonValues):
     load_image('./data/images/' + contenido[i], window)
     window['Prediction'].update(value=jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+    window['Features'].update(value=jsonValues[i]['response']['solutions']['re_features_v3']['detections'])
     mirar = jsonValues[i]['response']['solutions']['re_condition']['score']
     if mirar is not None:
         window['Rate'].update(value=mirar)
@@ -102,6 +103,7 @@ def main():
         [sg.Button('Prev'), sg.Button('Next')],
         [sg.Text("", size=(0,1), key='Cost')],
         [sg.Text("", size=(0,1), key='Prediction')],
+        [sg.Text("", size=(0,1), key='Features')],
         [sg.Text("", size=(0,1), key='Rate')]
     ]
 
@@ -128,7 +130,13 @@ def main():
             load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
             window["Cost"].update(value=str(price) + '€')
             window['Prediction'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+            window['Features'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_features_v3']['detections'])
+
+
+
+            
             mirar = jsonValues[indiceFoto]['response']['solutions']['re_condition']['score']
+
             if mirar is not None:
                 window['Rate'].update(value=mirar)
             else:
