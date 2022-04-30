@@ -66,6 +66,7 @@ def main():
     while True:
         event, values = window.read()
         if event == 'Search!':
+            indiceFoto = 0
             url = values['url']
             code = getHTML(url)
             imageLinks = getListLinksPhotos(code)
