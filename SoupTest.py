@@ -14,7 +14,15 @@ with open('test.txt','w') as f:
 list = soup.find_all("img", class_="re-DetailMosaicPhoto")
 lista = []
 for i in list :
-    result = regex.match('src=";(.*)"',i)
-    lista.append(result.group(1))
+    paraula = regex.search(r'src=\"(.*?)\"', str(i)).group(1)
+    lista.append(paraula)
 
 print(lista)
+
+for i, imagen in enumerate(lista):
+    # open image link and save as file
+    response = requests.get(imagen)
+    
+    imagename = './fotos/FOTO ' + str(i+1) + '.jpg'
+    with open(imagename, 'wb') as file:
+        file.write(response.content)
