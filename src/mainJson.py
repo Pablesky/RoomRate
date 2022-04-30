@@ -12,6 +12,7 @@ from textwrap import indent
 import requests
 import time
 
+
 def getHTML(url):
     r = requests.get(url)
     code = BeautifulSoup(r.content,'html.parser')
@@ -130,9 +131,6 @@ def main():
             window["Cost"].update(value='Price: ' + str(price) + '€')
             window['Prediction'].update(value='Type: ' + str(jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))
             window['Features'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_features_v3']['detections'])
-
-
-
             
             mirar = jsonValues[indiceFoto]['response']['solutions']['re_condition']['score']
 
@@ -140,7 +138,6 @@ def main():
                 window['Rate'].update(value='Rate: ' + str(mirar))
             else:
                 window['Rate'].update(value="")
-            
 
         
         if event == 'Next':
