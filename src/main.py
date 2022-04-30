@@ -14,7 +14,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 Features = {'beamed_ceiling':0.7,
             'carpet':0.9,
-            'ceiling fan': 0.6,
+            'ceiling_fan': 0.6,
             'coffered_ceiling':0.6,
             'exposed_bricks':0.4,
             'fireplace':0.5,
@@ -180,6 +180,9 @@ def calculateThings(puntuacion, cosas):
     else:
         return 0.5
 
+def faceAge():
+    return 2
+
 def main():
     indiceFoto = 0
     ubicacionFotos = []
@@ -196,7 +199,8 @@ def main():
         [sg.Text("", size=(0,1), key='Cost')],
         [sg.Text("", size=(0,1), key='Prediction')],
         [sg.Text("", size=(0,1), key='Features')],
-        [sg.Text("", size=(0,1), key='Rate')]
+        [sg.Text("", size=(0,1), key='Rate')],
+        [sg.Button('Face Compatibility')]
     ]
 
     window = sg.Window("RoomRate", elements, size=(500,500))
@@ -251,6 +255,9 @@ def main():
         if event == sg.WIN_CLOSED:
             cleanDataFolder()
             break    
+
+        if event == 'Face Compatibility':
+            age = faceAge()
 
 if __name__ == "__main__":
     main()
