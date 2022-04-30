@@ -1,10 +1,7 @@
-import glob
 from multiprocessing.sharedctypes import Value
 from turtle import update
 import PySimpleGUI as sg
-
 from PIL import Image, ImageTk
-
 from asyncio.base_subprocess import BaseSubprocessTransport
 import requests
 import re as regex
@@ -12,7 +9,6 @@ from bs4 import BeautifulSoup
 import os
 from textwrap import indent
 import requests
-import json
 
 def getHTML(url):
     r = requests.get(url)
@@ -50,13 +46,13 @@ def load_image(path, window):
     except:
         print(f"Unable to open {path}!")
 
-def update(contenido, i, window,imageLinks):
+def update(contenido, i, window,imageLinks, jsonValues):
     load_image('./data/images/' + contenido[i], window)
     window['Prediction'].update(value=contenido[i])
-    window['Rate'].update(value=getRate(imageLinks[i]))
+    window['Rate'].update(value=jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
 
 def getRate(ubicacionFoto):
-    url = 'https://api-us.restb.ai/vision/v2/multipredict'
+    url = 'https://api-eu.restb.ai/vision/v2/multipredict'
     payload = {
         # Add your client key
         'client_key': 'b717829c286243060e2429cc405e60bc480b18b2a4fe84b462e47cdf2ff41283',
@@ -69,15 +65,23 @@ def getRate(ubicacionFoto):
     response = requests.get(url, params=payload)
 
     # The response is formatted in JSON
-    json_response = response.json() 
-    with open('.test.json','w') as f:
-        f.write(json.dumps(json_response,indent=4))
-    return json_response['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']
+    return response.json() 
     
+
+def createJSON(imageLinks):
+    JSONvalues = []
+    for link in imageLinks:
+        JSONvalues.append(getRate(link))
+    
+    return JSONvalues
+        
+
 
 def main():
     indiceFoto = 0
     ubicacionFotos = []
+    imageLinks = []
+    jsonValues = []
     elements = [
         [sg.Input(size=(25,1), enable_events=True, key='url'), sg.Button("Search!")],
         [sg.Image(key='image')],
@@ -99,27 +103,25 @@ def main():
 
             ubicacionFotos = os.listdir('./data/images/')   
             ubicacionFotos.sort()
-            print(ubicacionFotos)
+            jsonValues = createJSON(imageLinks)
 
             load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
-            print(imageLinks)
             window['Prediction'].update(value=ubicacionFotos[indiceFoto])
-            window['Rate'].update(value=getRate(imageLinks[indiceFoto]))
+            window['Rate'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+            
 
         
         if event == 'Next':
             indiceFoto = indiceFoto + 1
             if indiceFoto == len(ubicacionFotos):
                 indiceFoto = len(ubicacionFotos) - 1
-            print(str(indiceFoto) + '\n')
-            update(ubicacionFotos, indiceFoto, window,imageLinks)  
+            update(ubicacionFotos, indiceFoto, window,imageLinks, jsonValues)  
 
         if event == 'Prev':
             indiceFoto = indiceFoto - 1
             if indiceFoto < 0:
                 indiceFoto = 0
-            print(str(indiceFoto) + '\n')
-            update(ubicacionFotos, indiceFoto, window,imageLinks)
+            update(ubicacionFotos, indiceFoto, window,imageLinks,jsonValues)
         
         if event == sg.WIN_CLOSED:
             break    
