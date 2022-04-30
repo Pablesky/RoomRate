@@ -71,8 +71,10 @@ def main():
             code = getHTML(url)
             imageLinks = getListLinksPhotos(code)
             downloadImages(imageLinks)
+            print(imageLinks)
 
             ubicacionFotos = os.listdir('./data/images/')
+            ubicacionFotos.sort()
             print(ubicacionFotos)
 
             load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
