@@ -2,13 +2,26 @@ import cv2
 import dlib
 import numpy as np
 
-img = cv2.imread('assets/kid1.jpg')
+cap = cv2.VideoCapture(0) # video capture source camera (Here webcam of laptop) 
+ret,frame = cap.read() # return a single frame in variable `frame`
+
+while(True):
+    cv2.imshow('.img1',frame) #display the captured image
+    if cv2.waitKey(1) & 0xFF == ord('y'): #save on pressing 'y' 
+        cv2.imwrite('.c1.png',frame)
+        cv2.destroyAllWindows()
+        break
+    ret,frame=cap.read()
+
+cap.release()
+
+img = cv2.imread('.c1.png')
 img = cv2.resize(img, (720, 640))
 frame = img.copy()
 
 # ------------ Model for Age detection --------#
-age_weights = "Models/age_deploy.prototxt"
-age_config = "Models/age_net.caffemodel"
+age_weights = "age_deploy.prototxt"
+age_config = "age_net.caffemodel"
 age_Net = cv2.dnn.readNet(age_config, age_weights)
 
 # Model requirements for image
