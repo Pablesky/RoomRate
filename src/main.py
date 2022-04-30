@@ -150,7 +150,7 @@ def update(contenido, i, window,imageLinks, jsonValues):
 def getPrediction(ubicacionFoto):
     url = 'https://api-eu.restb.ai/vision/v2/multipredict'
     payload = {
-        'client_key': 'b717829c286243060e2429cc405e60bc480b18b2a4fe84b462e47cdf2ff41283',
+        'client_key': 'KEY',
         'model_id': 're_roomtype_global_v2,re_features_v3,re_appliances_v2,re_condition',
         'image_url': ubicacionFoto
     }
