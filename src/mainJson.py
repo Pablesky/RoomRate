@@ -49,10 +49,10 @@ def load_image(path, window):
 
 def update(contenido, i, window,imageLinks, jsonValues):
     load_image('./data/images/' + contenido[i], window)
-    window['Prediction'].update(value=contenido[i])
-    window['Rate'].update(value=jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+    window['Rate'].update(value=jsonValues[i]['response']['solutions']['re_condition']['score'])
+    window['Prediction'].update(value=jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
 
-def getRate(ubicacionFoto):
+def getPrediction(ubicacionFoto):
     url = 'https://api-eu.restb.ai/vision/v2/multipredict'
     payload = {
         # Add your client key
@@ -73,7 +73,7 @@ def getRate(ubicacionFoto):
 def createJSON(imageLinks):
     JSONvalues = []
     for link in imageLinks:
-        JSONvalues.append(getRate(link))
+        JSONvalues.append(getPrediction(link))
     
     return JSONvalues
         
@@ -108,8 +108,8 @@ def main():
             jsonValues = createJSON(imageLinks)
 
             load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
-            window['Prediction'].update(value=ubicacionFotos[indiceFoto])
-            window['Rate'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
+            window['Rate'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_condition']['score'])
+            window['Prediction'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label'])
             
 
         
