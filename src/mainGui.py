@@ -29,7 +29,7 @@ def downloadImages(imageLinks):
     for i, imagen in enumerate(imageLinks):
         # open image link and save as file
         response = requests.get(imagen)
-        imagename = './data/FOTO_' + str(i+1) + '.jpg'
+        imagename = './data/images/FOTO_' + str(i+1) + '.jpg'
         with open(imagename, 'wb') as file:
             file.write(response.content)
 
@@ -48,7 +48,7 @@ def load_image(path, window):
         print(f"Unable to open {path}!")
 
 def update(contenido, i, window):
-    load_image('./data/' + contenido[i], window)
+    load_image('./data/images/' + contenido[i], window)
     window['Prediction'].update(value=contenido[i])
 
 def main():
@@ -72,10 +72,10 @@ def main():
             imageLinks = getListLinksPhotos(code)
             downloadImages(imageLinks)
 
-            ubicacionFotos = os.listdir('./data/')
+            ubicacionFotos = os.listdir('./data/images/')
             print(ubicacionFotos)
 
-            load_image('./data/' + ubicacionFotos[indiceFoto], window)
+            load_image('./data/images/' + ubicacionFotos[indiceFoto], window)
 
             window['Prediction'].update(value=ubicacionFotos[indiceFoto])
 
