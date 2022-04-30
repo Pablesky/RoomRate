@@ -19,4 +19,4 @@ response = requests.get(url, params=payload)
 
 # The response is formatted in JSON
 json_response = response.json()
-print(json_response['response']['solutions']['re_features_v3']['detections'])
+print(type(json_response['response']['solutions']['re_features_v3']['detections']))
