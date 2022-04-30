@@ -1,4 +1,5 @@
 from multiprocessing.sharedctypes import Value
+from tokenize import group
 from turtle import update
 import PySimpleGUI as sg
 from PIL import Image, ImageTk
@@ -24,6 +25,12 @@ def getListLinksPhotos(HTMLcode):
         link = regex.search(r'src=\"(.*?)\"', str(linia)).group(1)
         imagesLinks.append(link)
     return imagesLinks
+
+def getPrice(HTMLcode):
+    HTMLcode.prettify()
+    linesWithImages = HTMLcode.find_all("span", class_="re-DetailHeader-price")
+    return regex.search(r'>(.*?) €<',str(linesWithImages[0])).group(1)
+
 
 def downloadImages(imageLinks):
     for i, imagen in enumerate(imageLinks):
@@ -84,6 +91,7 @@ def main():
     ubicacionFotos = []
     imageLinks = []
     jsonValues = []
+    price = 0.0
     elements = [
         [sg.Input(size=(25,1), enable_events=True, key='url'), sg.Button("Search!")],
         [sg.Image(key='image')],
@@ -102,6 +110,9 @@ def main():
             code = getHTML(url)
             imageLinks = getListLinksPhotos(code)
             downloadImages(imageLinks)
+            price = getPrice(code)
+            price = price.replace('.', '')
+            price = float(price)
 
             ubicacionFotos = os.listdir('./data/images/')   
             ubicacionFotos.sort()
