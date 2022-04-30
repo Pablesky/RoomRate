@@ -40,7 +40,7 @@ def main():
     code = getHTML(url)
     imageLinks = getListLinksPhotos(code)
     downloadImages(imageLinks)
-    cleanDataFolder()
+    #cleanDataFolder()
     
 
 if __name__ == '__main__':
