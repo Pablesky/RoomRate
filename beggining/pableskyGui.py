@@ -1,6 +1,7 @@
 # image_browser.py
 
 import glob
+from turtle import update
 import PySimpleGUI as sg
 
 from PIL import Image, ImageTk
@@ -15,8 +16,6 @@ import os
 def getHTML(url):
     r = requests.get(url)
     code = BeautifulSoup(r.content,'html.parser')
-    with open('./data/codeHTML.html', 'w') as f:
-        f.write(code.prettify())
     return code
 
 def getListLinksPhotos(HTMLcode):
@@ -55,8 +54,12 @@ def load_image(path, window):
     except:
         print(f"Unable to open {path}!")
         
+def update(contenido, i, window):
+    load_image('./data/' + contenido[i], window)
 
 def main():
+    i = 0
+    contenido = []
     column = [sg.Button("Prev"), sg.Image(key="image"), sg.Button("Next")]
     elements = [
         [
@@ -79,18 +82,18 @@ def main():
             images = parse_folder(values["file"])
             if images:
                 load_image(images[0], window)
-        if event == "Next" and images:
-            if location == len(images) - 1:
-                location = 0
-            else:
-                location += 1
-            load_image(images[location], window)
-        if event == "Prev" and images:
-            if location == 0:
-                location = len(images) - 1
-            else:
-                location -= 1
-            load_image(images[location], window)
+        if event == "Next":
+            i = i + 1
+            if i == len(contenido):
+                i = len(contenido) - 1
+            print(str(i) + '\n')
+            update(contenido, i, window)
+        if event == "Prev":
+            i = i - 1
+            if i < 0:
+                i = 0
+            print(str(i) + '\n')    
+            update(contenido, i, window)
         if event == "GO!":
             url = values['file']
             code = getHTML(url)
@@ -100,9 +103,7 @@ def main():
             contenido = os.listdir('./data/')
             print(contenido)
 
-            for fichero in contenido:
-                if fichero.endswith('.jpg'):
-                    load_image(images['./data' + fichero], window)
+            load_image('./data/' + contenido[i], window)
 
 
     window.close()
