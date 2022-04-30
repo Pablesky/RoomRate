@@ -123,12 +123,12 @@ def getPrice(HTMLcode):
 def downloadImages(imageLinks):
     for i, imagen in enumerate(imageLinks):
         response = requests.get(imagen)
-        imagename = './data/images/FOTO_' + str(i + 1) + '.jpg'
+        imagename = './data/FOTO_' + str(i + 1) + '.jpg'
         with open(imagename, 'wb') as file:
             file.write(response.content)
 
 def cleanDataFolder(): 
-    dir = './data/images/'
+    dir = './data/'
     for f in os.listdir(dir):
         os.remove(os.path.join(dir, f))
 
@@ -142,7 +142,7 @@ def load_image(path, window):
         print(f"Unable to open {path}!")
 
 def update(contenido, i, window,imageLinks, jsonValues):
-    load_image('./data/images/' + 'FOTO_' + str(i + 1) + '.jpg', window)
+    load_image('./data/' + 'FOTO_' + str(i + 1) + '.jpg', window)
     window['Prediction'].update(value='Type: ' + str(jsonValues[i]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))    
     mirar = jsonValues[i]['response']['solutions']['re_condition']['score']
     if mirar is not None:
@@ -222,13 +222,13 @@ def main():
             price = price.replace('.', '')
             price = int(price)
 
-            ubicacionFotos = os.listdir('./data/images/')   
+            ubicacionFotos = os.listdir('./data/')   
             ubicacionFotos.sort()
             jsonValues, puntuacion, cosas = createJSON(imageLinks)
 
             media = calculateThings(puntuacion, cosas)
 
-            load_image('./data/images/' + 'FOTO_' + str(indiceFoto + 1) + '.jpg', window)
+            load_image('./data/' + 'FOTO_' + str(indiceFoto + 1) + '.jpg', window)
             window["Cost"].update(value='Price: ' + str(price) + '€')
             window['Prediction'].update(value='Type: ' + str(jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))
             window['Features'].update(value=str(media))
