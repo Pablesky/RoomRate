@@ -27,10 +27,10 @@ Features = {'beamed_ceiling':0.7,
             'high_ceiling':0.1,
             'kitchen_bar':0.2,
             'kitchen_island':0.1,
-            'natural_light,':0.5,
+            'natural_light':0.5,
             'notable_chandelier':0.8,
             'skylight':0.2,
-            'tainless_steel': 0.1,
+            'stainless_steel': 0.1,
             'tile_floor': 0.5, 
             'vaulted_ceiling':0.5,
             'central_ac':0.1, 
@@ -146,11 +146,26 @@ def getPrediction(ubicacionFoto):
 
 def createJSON(imageLinks):
     JSONvalues = []
+    puntos = 0.0
+    cosas = 1
     for link in imageLinks:
-        JSONvalues.append(getPrediction(link))
+        temporal = getPrediction(link)
+
+        lista = temporal['response']['solutions']['re_features_v3']['detections']
+
+        for element in lista:
+            puntos += Features[element['label']]
+            cosas += 1
+
+        JSONvalues.append(temporal)
     
-    return JSONvalues
+    return JSONvalues, puntos, cosas
         
+def calculateThings(puntuacion, cosas):
+    if cosas != 0:
+        return float(puntuacion)/float(cosas)
+    else:
+        return 0.5
 
 def main():
     indiceFoto = 0
@@ -158,6 +173,9 @@ def main():
     imageLinks = []
     jsonValues = []
     price = 0
+    puntuacion = 0.0
+    media = 0.0
+    cosas = 0
     elements = [
         [sg.Input(size=(25,1), enable_events=True, key='url'), sg.Button("Search!")],
         [sg.Image(key='image')],
@@ -183,16 +201,17 @@ def main():
             price = getPrice(code)
             price = price.replace('.', '')
             price = int(price)
-            
 
             ubicacionFotos = os.listdir('./data/images/')   
             ubicacionFotos.sort()
-            jsonValues = createJSON(imageLinks)
+            jsonValues, puntuacion, cosas = createJSON(imageLinks)
+
+            media = calculateThings(puntuacion, cosas)
 
             load_image('./data/images/' + 'FOTO_' + str(indiceFoto + 1) + '.jpg', window)
             window["Cost"].update(value='Price: ' + str(price) + '€')
             window['Prediction'].update(value='Type: ' + str(jsonValues[indiceFoto]['response']['solutions']['re_roomtype_global_v2']['top_prediction']['label']))
-            window['Features'].update(value=jsonValues[indiceFoto]['response']['solutions']['re_features_v3']['detections'])
+            window['Features'].update(value=str(media))
             
             mirar = jsonValues[indiceFoto]['response']['solutions']['re_condition']['score']
 
