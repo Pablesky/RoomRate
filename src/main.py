@@ -1,3 +1,4 @@
+from curses import mouseinterval
 from turtle import update
 import PySimpleGUI as sg
 from PIL import Image, ImageTk
@@ -13,6 +14,12 @@ from selenium import webdriver
 from webdriver_manager.firefox import GeckoDriverManager
 import cv2
 import dlib
+
+#LINKS muestra
+#https://www.fotocasa.es/es/comprar/vivienda/palma-de-mallorca/aire-acondicionado-terraza-ascensor/163373875/d
+#https://www.fotocasa.es/es/comprar/vivienda/palma-de-mallorca/aire-acondicionado-trastero-internet/163372395/d
+#https://www.fotocasa.es/es/comprar/vivienda/palma-de-mallorca/aire-acondicionado-calefaccion-jardin-terraza-patio/163370729/d
+
 
 N_MAX = 15
 
@@ -331,9 +338,9 @@ def main():
 
         if event == 'Face Compatibility':
             age = faceAge()
-            window['Age'].update(value=str(age))
+            window['Age'].update(value='Aprox. age: ' + str(age))
             if media != 0.0:
-                window['Recomendation'].update('Age prediction: ' + str(value=100.0 - abs(int(age) - media)))
+                window['Recomendation'].update(value = 'Accuracy: ' + str(100.0 - abs(int(age) - media)))
 
 
 if __name__ == "__main__":
