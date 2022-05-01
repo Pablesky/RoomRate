@@ -150,7 +150,7 @@ def update(contenido, i, window,imageLinks, jsonValues):
 def getPrediction(ubicacionFoto):
     url = 'https://api-eu.restb.ai/vision/v2/multipredict'
     payload = {
-        'client_key': 'b717829c286243060e2429cc405e60bc480b18b2a4fe84b462e47cdf2ff41283',
+        'client_key': 'KEY',
         'model_id': 're_roomtype_global_v2,re_features_v3,re_appliances_v2,re_condition',
         'image_url': ubicacionFoto
     }
@@ -233,14 +233,7 @@ def faceAge():
     
     faces = face_detector(img_gray)
 
-    if not faces:
-        mssg = 'No face detected'
-        cv2.putText(img, f'{mssg}', (40, 40),
-                    cv2.FONT_HERSHEY_SIMPLEX, 2, (200), 2)
-        cv2.imshow('Age detected', img)
-        cv2.waitKey(0)
-    
-    else:
+    if faces:
         for face in faces:
             x = face.left()  # extracting the face coordinates
             y = face.top()
@@ -279,7 +272,7 @@ def main():
         [sg.Text("", size=(0,1), key='Cost')],
         [sg.Text("", size=(0,1), key='Prediction')],
         [sg.Text("", size=(0,1), key='Features')],
-        [sg.Text("", size=(0,1), key='Rate')],
+        [sg.Text("", size=(0,1), key='Rate'), sg.Text("", size=(0,1), key='Age')],
         [sg.Button('Face Compatibility'), sg.Text("", size=(0,1), key='Recomendation')]
     ]
 
@@ -338,8 +331,9 @@ def main():
 
         if event == 'Face Compatibility':
             age = faceAge()
+            window['Age'].update(value=str(age))
             if media != 0.0:
-                window['Recomendation'].update(value=100.0 - abs(int(age) - media))
+                window['Recomendation'].update('Age prediction: ' + str(value=100.0 - abs(int(age) - media)))
 
 
 if __name__ == "__main__":

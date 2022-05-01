@@ -655,3 +655,68 @@ console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkErr
 
 ###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
 
+1651363354185	geckodriver	INFO	Listening on 127.0.0.1:54355
+1651363354693	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "46237" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileq0b6Vb"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1651363355942	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileq0b6Vb/search.json.mozlz4", (void 0)))
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+DevTools listening on ws://localhost:46237/devtools/browser/f3683f1d-872c-4e07-b3e1-3c0db87fcb0c
+1651363358179	Marionette	INFO	Listening on port 43795
+Read port: 43795
+1651363358232	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+ATTENTION: default value of option mesa_glthread overridden by environment.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/GHUvgzmiQbvknj20iOAF6RTQCjjR5OqNB0WELP0GoX8.js line 1 > eval line 3908 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/GHUvgzmiQbvknj20iOAF6RTQCjjR5OqNB0WELP0GoX8.js line 1 > eval line 4582 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1651363548298	geckodriver	INFO	Listening on 127.0.0.1:44939
+1651363548803	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "39097" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileqebKZW"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1651363550127	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileqebKZW/search.json.mozlz4", (void 0)))
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+DevTools listening on ws://localhost:39097/devtools/browser/85192c9d-2160-4a3c-ae69-589942b706eb
+1651363552311	Marionette	INFO	Listening on port 35449
+Read port: 35449
+1651363552436	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1651363663639	Marionette	INFO	Stopped listening on port 35449
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
+
+1651363960089	geckodriver	INFO	Listening on 127.0.0.1:39905
+1651363960596	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "43723" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileT8e7Pu"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1651363961840	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileT8e7Pu/search.json.mozlz4", (void 0)))
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+DevTools listening on ws://localhost:43723/devtools/browser/cd8ecd69-ff29-4d4d-87a3-3c6ba0ad64fe
+1651363964049	Marionette	INFO	Listening on port 42205
+Read port: 42205
+1651363964129	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1651364146340	Marionette	INFO	Stopped listening on port 42205
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
+
+1651364179959	geckodriver	INFO	Listening on 127.0.0.1:43707
+1651364180473	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "45137" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileWl9O3i"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1651364181692	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileWl9O3i/search.json.mozlz4", (void 0)))
+JavaScript error: resource://gre/modules/TelemetryUtils.jsm, line 154: TypeError: date is undefined
+DevTools listening on ws://localhost:45137/devtools/browser/df079291-1ca0-40d3-89b3-a870999310ea
+1651364183688	Marionette	INFO	Listening on port 35535
+Read port: 35535
+1651364183804	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
